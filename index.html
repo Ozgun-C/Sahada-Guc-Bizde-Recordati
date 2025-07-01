@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahada Güç Bizde</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            color: #333;
+        }
+        header {
+            background-color: white;
+            color: white;
+            width: 100%;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        header .logo {
+            height: 80px;
+            width: auto;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: black;
+            margin-top: 10px;
+        }
+        .game-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            max-width: 600px;
+            width: 100%;
+        }
+        .question-display {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: black;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+            min-height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        button {
+            padding: 12px 30px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        footer {
+            margin-top: 50px;
+            font-size: 0.8em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Recordati_logo.png" alt="Şirket Logo" class="logo">
+        <h1>Sahada Güç Bizde</h1>
+    </header>
+    <div class="game-container">
+        <div id="questionDisplay" class="question-display">Hazır mısınız?</div>
+        <button id="startButton" onclick="startGame()">Başla</button>
+        <button id="stopButton" onclick="stopGame()">Dur</button>
+    </div>
+    <footer>
+        <p>&copy; 2025 Recordati İlaç San. Tic. A.Ş. Tüm hakları saklıdır.</p>
+    </footer>
+    <script>
+        const questions = [
+            "Etken Maddesi Nedir?",
+            "Endikasyonları Nelerdir?",
+            "Sloganımız Nedir?",
+            "Özellik ve Faydası Nedir?",
+            "Fiyatı Ne Kadar?",
+            "Rakip, Doktorlara Kendileriyle İlgili Ne Anlatıyor?",
+            "Rakip, Doktorlara Bizimle İlgili Ne Anlatıyor?",
+            "Rakiplerimiz Promosyon Dağıtıyor mu?",
+            "Biz Ne Anlatırsak Doktorlarımız Bizi Tercih Eder?",
+            "Bölgede İlacı Çalışan Var mı?",
+            "Rakiplerimiz Eczanede Aksiyon Alıyor mu?",
+            "Her Q için Rakip Strateji Çalışmaları?",
+            "Rakip PP Nedir?"
+        ];
+        let isGameRunning = false;
+        let nextQuestionTime = 0;
+        function startGame() {
+            const questionDisplay = document.getElementById("questionDisplay");
+            if (!isGameRunning) {
+                isGameRunning = true;
+                nextQuestionTime = performance.now();
+                function showNextQuestion() {
+                    if (isGameRunning) {
+                        const currentTime = performance.now();
+                        if (currentTime - nextQuestionTime >= 100) {
+                            const randomQuestion = questions[Math.floor(Math.random() * questions.length)];
+                            questionDisplay.textContent = randomQuestion;
+                            nextQuestionTime = currentTime;
+                        }
+                        requestAnimationFrame(showNextQuestion);
+                    }
+                }
+                requestAnimationFrame(showNextQuestion);
+            }
+        }
+        function stopGame() {
+            const questionDisplay = document.getElementById("questionDisplay");
+            if (isGameRunning) {
+                isGameRunning = false;
+                const randomQuestion = questions[Math.floor(Math.random() * questions.length)];
+                questionDisplay.textContent = randomQuestion;
+            }
+        }
+    </script>
+</body>
+</html>
